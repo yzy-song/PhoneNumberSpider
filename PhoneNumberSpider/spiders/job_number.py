@@ -10,7 +10,7 @@ class JobNumberSpider(scrapy.Spider):
     def parse(self, response):
         item = PhonenumberspiderItem()
 
-        # /html/body/div[1]/div[1]/text()[2]
+        # /html/body/div[1]/div[2]/div[1]/div[2]/a[2] 分页按钮xpath
         for jobs_primary in response.xpath('//div/ul/li[@class="clr"]'):
 
             gov_unit_name = jobs_primary.xpath('./strong/a/text()').extract()

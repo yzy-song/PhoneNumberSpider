@@ -7,6 +7,6 @@ from scrapy import cmdline
 
 
 # name = 'job_cities'
-name = 'job_number'
+name = 'job_gov_links'
 cmd = 'scrapy crawl {0}'.format(name)
 cmdline.execute(cmd.split())
