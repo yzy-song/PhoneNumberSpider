@@ -6,10 +6,13 @@ from PhoneNumberSpider.items import PhonenumberspiderItem
 class JobCitiesSpider(scrapy.Spider):
     name = 'job_cities'
     allowed_domains = ['dianhua.mapbar.com']
-    start_urls = ['http://dianhua.mapbar.com/']
+    start_urls = [
+        'http://dianhua.mapbar.com/',
+    ]
 
     # 爬取的方法
     def parse(self, response):
+
         # 注意在上面导入PhonenumberspiderItem包
         item = PhonenumberspiderItem()
         # 匹配
@@ -41,14 +44,13 @@ class JobCitiesSpider(scrapy.Spider):
                     item['area_code'] = area_code[index]
 
                 # 再次发送请求获取数据
-                # yield scrapy.Request(city_link_arr[index] + 'C03',meta={'idx':index},callback=self.parse_page)
-                # yield item
-                print(city_link_arr[index] + 'C03')
-                # 不能使用return
+                if index==0:
+                    yield scrapy.Request(city_link_arr[index] + 'C03',meta={'province': item['province']},callback=self.parse_page)
+                    yield item
 
     def parse_page(self, response):
         # 解析1个城市的页面
 
         # /html/body/div[1]/div[2]/div[1]/div[1]/ul/li[1]/strong/a
         title = response.meta['idx']
-        print('index = ' +title)
+        print('index = ' + title)
