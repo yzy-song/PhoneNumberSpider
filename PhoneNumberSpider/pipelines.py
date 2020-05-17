@@ -24,37 +24,43 @@ class PhonenumberspiderPipeline(object):
 
         self.line = 1
         self.mypd = xlwt.Workbook(encoding="utf8")
-        self.sheet = self.mypd.add_sheet("城市列表")
+        self.sheet = self.mypd.add_sheet("电话")
         self.sheet.col(0).width = 256 * 20  # Set the column w
         self.sheet.col(1).width = 256 * 20
         self.sheet.col(2).width = 256 * 50
         self.sheet.col(3).width = 256 * 20
+        self.sheet.col(4).width = 256 * 20
+        self.sheet.col(5).width = 256 * 20
 
         self.tall_style = xlwt.easyxf('font:height 300')
         first_row = self.sheet.row(0)
         first_row.set_style(self.tall_style)
 
-        head = ["省份","城市","链接","区号"]
+        head = [
+            "省份",
+            "城市",
+            "单位名称",
+            "电话号码",
+            "单位分类",
+            "分类链接",
+        ]
         for h in head:
             self.sheet.write(0,head.index(h),h)
 
     def close_spider(self, spider):  # 重写close_spider回调方法
-        self.mypd.save("cities.xlsx")
+        self.mypd.save("test2.xlsx")
+        # self.mypd.save("test.xlsx")
+        # self.mypd.save("cities.xlsx")
         # self.mypd.to_csv(self.file_name)
 
     def process_item(self, item, spider):  # 添加数据到pandas中
-        
-        # self.mypd = self.mypd.append(
-        #     {
-        #         'name': item['name'],
-        #         'city_url': item['city_url'],
-        #         'area_code': item['area_code']
-        #     }, ignore_index=True)
 
-        self.sheet.write(self.line, 0, item['province'])
-        self.sheet.write(self.line, 1, item['city'])
-        self.sheet.write(int(self.line), 2, item['city_url'])
-        self.sheet.write(int(self.line), 3, item['area_code'])
+        # self.sheet.write(self.line, 0, item['province'])
+        # self.sheet.write(self.line, 1, item['city'])
+        self.sheet.write(int(self.line), 2, item['gov_unit_name'])
+        self.sheet.write(int(self.line), 3, item['gov_unit_phone'])
+        # self.sheet.write(int(self.line), 4, item['gov_unit_type'])
+        # self.sheet.write(int(self.line), 5, item['type_link'])
         self.sheet.row(self.line).set_style(self.tall_style)
         self.line = self.line + 1
 

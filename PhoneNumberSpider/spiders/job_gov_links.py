@@ -32,3 +32,19 @@ class JobGovLinksSpider(scrapy.Spider):
                     # 筛选需要的链接
                     if names[index] in self.nameStrArr and index == 0:
                         item['type_link'] = links[index]
+                        item['gov_unit_name'] = links[index]
+                        item['gov_unit_phone'] = links[index]
+
+                        # yield scrapy.Request(links[index],
+                        #                      meta={
+                        #                          'item': item,
+                        #                          'idx': index
+                        #                      },
+                        #                      callback=self.parse_page)
+                        yield item
+
+    def parse_page(self, response):
+        # 解析1个城市的页面
+
+        item = response.meta['item']
+        print(item)

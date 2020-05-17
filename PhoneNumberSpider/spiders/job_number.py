@@ -10,6 +10,7 @@ class JobNumberSpider(scrapy.Spider):
     def parse(self, response):
         item = PhonenumberspiderItem()
 
+        # /html/body/div[1]/div[1]/text()[2]
         for jobs_primary in response.xpath('//div/ul/li[@class="clr"]'):
 
             gov_unit_name = jobs_primary.xpath('./strong/a/text()').extract()
@@ -20,19 +21,15 @@ class JobNumberSpider(scrapy.Spider):
 
             # 再次发送请求获取数据
             # yield scrapy.Request(city_link_arr[index] + 'C03',meta={'idx':index},callback=self.parse_page)
-            # yield item
-
             print(item)
+            yield item
+
             for index in range(4):
                 if index == 0:
-                    # print('C03')
                     pass
                 else:
                     pass
-                    # print('C03_' + str(index))
 
     def parse_page(self, response):
         # 解析1个城市的页面
-
-        title = response.meta['idx']
-        print('index = ' + title)
+        pass

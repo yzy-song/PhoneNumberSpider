@@ -27,9 +27,6 @@ class JobCitiesSpider(scrapy.Spider):
             city_link_arr = jobs_primary.xpath(
                 './div[@class="column"]/dl/dt/a/@href').extract()
 
-            area_code = jobs_primary.xpath(
-                './div[@class="column"]/dl/dd/text()').extract()
-
             item['province'] = province_name[0].replace('电话区号', '')
 
             for index in range(len(city_link_arr)):
@@ -40,17 +37,12 @@ class JobCitiesSpider(scrapy.Spider):
                 if city_link_arr[index]:
                     item['city_url'] = city_link_arr[index]
 
-                if area_code[index]:
-                    item['area_code'] = area_code[index]
-
                 # 再次发送请求获取数据
-                if index==0:
-                    yield scrapy.Request(city_link_arr[index] + 'C03',meta={'province': item['province']},callback=self.parse_page)
-                    yield item
+                yield scrapy.Request(city_link_arr[index] + 'C03', meta={'item': item, 'idx': index}, callback=self.parse_page)
 
     def parse_page(self, response):
         # 解析1个城市的页面
 
-        # /html/body/div[1]/div[2]/div[1]/div[1]/ul/li[1]/strong/a
-        title = response.meta['idx']
-        print('index = ' + title)
+        item = response.meta['item']
+        print(item)
+        yield item

@@ -14,18 +14,13 @@ class PhonenumberspiderItem(scrapy.Item):
     province = scrapy.Field()
     #城市名
     city = scrapy.Field()
-    #城市对应url
-    city_url = scrapy.Field()
-    #区号
-    area_code = scrapy.Field()
-
+    # 单位名称
+    gov_unit_name = scrapy.Field()
+    # 电话号码
+    gov_unit_phone = scrapy.Field()
     # 单位分类
     gov_unit_type = scrapy.Field()
 
     # 分类链接
     type_link = scrapy.Field()
 
-    # 单位名称
-    gov_unit_name = scrapy.Field()
-    # 电话号码
-    gov_unit_phone = scrapy.Field()
