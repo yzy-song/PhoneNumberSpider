@@ -26,14 +26,15 @@ class PhonenumberspiderPipeline(object):
         self.mypd = xlwt.Workbook(encoding="utf8")
         self.sheet = self.mypd.add_sheet("城市列表")
         self.sheet.col(0).width = 256 * 20  # Set the column w
-        self.sheet.col(1).width = 256 * 50
-        self.sheet.col(2).width = 256 * 20
+        self.sheet.col(1).width = 256 * 20
+        self.sheet.col(2).width = 256 * 50
+        self.sheet.col(3).width = 256 * 20
 
         self.tall_style = xlwt.easyxf('font:height 300')
         first_row = self.sheet.row(0)
         first_row.set_style(self.tall_style)
 
-        head = ["城市","链接","区号"]
+        head = ["省份","城市","链接","区号"]
         for h in head:
             self.sheet.write(0,head.index(h),h)
 
@@ -50,9 +51,10 @@ class PhonenumberspiderPipeline(object):
         #         'area_code': item['area_code']
         #     }, ignore_index=True)
 
-        self.sheet.write(self.line, 0, item['name'])
-        self.sheet.write(int(self.line), 1, item['city_url'])
-        self.sheet.write(int(self.line), 2, item['area_code'])
+        self.sheet.write(self.line, 0, item['province'])
+        self.sheet.write(self.line, 1, item['city'])
+        self.sheet.write(int(self.line), 2, item['city_url'])
+        self.sheet.write(int(self.line), 3, item['area_code'])
         self.sheet.row(self.line).set_style(self.tall_style)
         self.line = self.line + 1
 

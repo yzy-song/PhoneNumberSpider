@@ -10,8 +10,10 @@ import scrapy
 
 class PhonenumberspiderItem(scrapy.Item):
     # define the fields for your item here like:
+    #省份名
+    province = scrapy.Field()
     #城市名
-    name = scrapy.Field()
+    city = scrapy.Field()
     #城市对应url
     city_url = scrapy.Field()
     #区号
