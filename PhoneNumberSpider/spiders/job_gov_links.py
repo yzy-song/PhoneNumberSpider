@@ -6,7 +6,11 @@ from PhoneNumberSpider.items import PhonenumberspiderItem
 class JobGovLinksSpider(scrapy.Spider):
     name = 'job_gov_links'
     allowed_domains = ['dianhua.mapbar.com']
-    start_urls = ['http://dianhua.mapbar.com/shijiazhuang']
+    start_urls = [
+        'http://dianhua.mapbar.com/beijing',
+        # 'http://dianhua.mapbar.com/hengshui'
+        # 'http://dianhua.mapbar.com/yangquan'
+    ]
 
     nameStrArr = [
         '交通城市管理机构', '政府机关', '直属机构', '法院检察院', '公安局派出所', '省地二级政府', '区县级政府机关',
@@ -30,7 +34,7 @@ class JobGovLinksSpider(scrapy.Spider):
                     # 筛选需要的链接
                     if names[index] in self.nameStrArr:
 
-                        item['province'] = '河北'
+                        item['province'] = '北京'
                         item['city'] = city
                         item['gov_unit_type'] = names[index]
                         item['type_link'] = links[index]
@@ -78,7 +82,6 @@ class JobGovLinksSpider(scrapy.Spider):
     # 解析1个分类下的单个页面数据
     def parse_page(self, response):
 
-        print('parse_page====')
         item = response.meta['item']
         for jobs_primary in response.xpath('//div/ul/li[@class="clr"]'):
 
@@ -88,5 +91,4 @@ class JobGovLinksSpider(scrapy.Spider):
             item['gov_unit_name'] = gov_unit_name
             item['gov_unit_phone'] = gov_unit_phone
             # 再次发送请求获取数据
-            print('item========')
             yield item

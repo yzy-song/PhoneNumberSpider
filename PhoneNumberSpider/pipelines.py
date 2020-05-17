@@ -16,12 +16,9 @@ class PhonenumberspiderPipeline(object):
             raise NotConfigured
         self.file_name = file_name
 
-        # self.mypd = pd.DataFrame(columns=[
-        #     'name',
-        #     'city_url',
-        #     'area_code'
-        # ])
-
+        """
+        保存为excel文件
+        """
         self.line = 1
         self.mypd = xlwt.Workbook(encoding="utf8")
         self.sheet = self.mypd.add_sheet("电话")
@@ -45,18 +42,33 @@ class PhonenumberspiderPipeline(object):
             "分类链接",
         ]
         for h in head:
-            self.sheet.write(0,head.index(h),h)
+            self.sheet.write(0, head.index(h), h)
+
+        """
+        保存为csv文件
+        self.mypd = pd.DataFrame(columns=['name', 'uri', 'date', 'desc'])
+
+        """
 
     def close_spider(self, spider):  # 重写close_spider回调方法
-        self.mypd.save("test3.xlsx")
-        # self.mypd.save("test4.xlsx")
-        # self.mypd.save("test3.xlsx")
+
+        """
+        保存为excel文件
+        """
+        self.mypd.save("test2.xlsx")
         # self.mypd.save("test2.xlsx")
         # self.mypd.save("test.xlsx")
         # self.mypd.save("cities.xlsx")
 
-    def process_item(self, item, spider):  # 添加数据到pandas中
+        """
+        保存为csv文件
+        self.mypd.to_csv(self.file_name)
+        """
 
+    def process_item(self, item, spider):  # 添加数据到pandas中
+        """
+        保存为excel文件
+        """
         self.sheet.write(self.line, 0, item['province'])
         self.sheet.write(self.line, 1, item['city'])
         self.sheet.write(int(self.line), 2, item['gov_unit_name'])
@@ -65,6 +77,13 @@ class PhonenumberspiderPipeline(object):
         self.sheet.write(int(self.line), 5, item['type_link'])
         self.sheet.row(self.line).set_style(self.tall_style)
         self.line = self.line + 1
+
+        """
+        保存为csv文件
+        self.mypd = self.mypd.append(
+            {'name': item['name'][0], 'uri': item['uri'][0], 'date': item['date'][0], 'desc': item['desc']}, ignore_index=True)
+            print(len(self.mypd))
+        """
 
     def optimizeContent(self,res):
         res = res.replace('b\'', '')
