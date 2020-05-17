@@ -33,12 +33,7 @@ class JobCitiesSpider(scrapy.Spider):
 
                 if city_name[index]:
                     item['city'] = city_name[index]
-
-                if city_link_arr[index]:
-                    item['city_url'] = city_link_arr[index]
-
-                # 再次发送请求获取数据
-                # yield scrapy.Request(city_link_arr[index] + 'C03', meta={'item': item, 'idx': index}, callback=self.parse_page)
+                    yield scrapy.Request(city_link_arr[index] + 'C03', meta={'item': item, 'idx': index}, callback=self.parse_page)
 
     def parse_page(self, response):
         # 解析1个城市的页面

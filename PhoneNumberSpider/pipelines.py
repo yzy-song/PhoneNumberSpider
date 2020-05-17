@@ -48,12 +48,12 @@ class PhonenumberspiderPipeline(object):
             self.sheet.write(0,head.index(h),h)
 
     def close_spider(self, spider):  # 重写close_spider回调方法
-        self.mypd.save("test4.xlsx")
+        self.mypd.save("test3.xlsx")
+        # self.mypd.save("test4.xlsx")
         # self.mypd.save("test3.xlsx")
         # self.mypd.save("test2.xlsx")
         # self.mypd.save("test.xlsx")
         # self.mypd.save("cities.xlsx")
-        # self.mypd.to_csv(self.file_name)
 
     def process_item(self, item, spider):  # 添加数据到pandas中
 

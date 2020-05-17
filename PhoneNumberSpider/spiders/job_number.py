@@ -24,12 +24,6 @@ class JobNumberSpider(scrapy.Spider):
             print(item)
             yield item
 
-            for index in range(4):
-                if index == 0:
-                    pass
-                else:
-                    pass
-
     def parse_page(self, response):
         # 解析1个城市的页面
         pass
