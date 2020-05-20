@@ -55,7 +55,8 @@ class PhonenumberspiderPipeline(object):
         """
         保存为excel文件
         """
-        self.mypd.save("test2.xlsx")
+        self.mypd.save("test2.xls")
+        # self.mypd.save("test2.xlsx")
         # self.mypd.save("test2.xlsx")
         # self.mypd.save("test.xlsx")
         # self.mypd.save("cities.xlsx")

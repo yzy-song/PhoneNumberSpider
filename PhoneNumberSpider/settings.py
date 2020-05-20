@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'PhoneNumberSpider.spiders'
 #USER_AGENT = 'PhoneNumberSpider (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # 配置默认的请求头
 DEFAULT_REQUEST_HEADERS = {

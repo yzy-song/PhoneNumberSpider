@@ -7,7 +7,7 @@ class JobGovLinksSpider(scrapy.Spider):
     name = 'job_gov_links'
     allowed_domains = ['dianhua.mapbar.com']
     start_urls = [
-        "http://dianhua.mapbar.com/beijing",
+        # "http://dianhua.mapbar.com/beijing",
         # "http://dianhua.mapbar.com/shanghai",
         # "http://dianhua.mapbar.com/tianjin",
         # "http://dianhua.mapbar.com/chongqing",
@@ -378,6 +378,12 @@ class JobGovLinksSpider(scrapy.Spider):
         '地市级政府机关'
     ]
 
+    exclude_words = [
+        "派出所", "法庭", "警务室", "警务处", "街道", "街道办", "街道办事处", "政务中心", "服务中心", "服务站",
+        "公证处", "执法大队", "交警大队", "交警支队", "中队", "大队", "接待大厅", "办公室", "工商所", "财政所",
+        "稽查所", "镇政府", "镇委", "监测站", "监督站", "监理站", "检验站", "管理站"
+    ]
+
     def parse(self, response):
 
         item = PhonenumberspiderItem()
@@ -395,7 +401,7 @@ class JobGovLinksSpider(scrapy.Spider):
                     # 筛选需要的链接
                     if names[index] in self.nameStrArr:
 
-                        item['province'] = '北京'
+                        item['province'] = '河南'
                         item['city'] = city
                         item['gov_unit_type'] = names[index]
                         item['type_link'] = links[index]
@@ -422,6 +428,8 @@ class JobGovLinksSpider(scrapy.Spider):
             item['gov_unit_name'] = gov_unit_name
             item['gov_unit_phone'] = gov_unit_phone
 
+            item['type_link'] = new_url
+
             # 再次发送请求获取数据
             pages = response.xpath('//div[@class="page"]')
 
@@ -432,11 +440,10 @@ class JobGovLinksSpider(scrapy.Spider):
 
             for index in range(len(page_links)):
                 if now_page == page_links[index]:
-                    yield item
-                    # yield scrapy.Request(new_url,meta={'item': item},callback=self.parse_page)
+                    if self.check_data(item['gov_unit_name'][0]):
+                        yield item
                 else:
                     yield scrapy.Request(page_links[index],meta={'item': item},callback=self.parse_page)
-                    # yield item
 
 
 
@@ -451,5 +458,20 @@ class JobGovLinksSpider(scrapy.Spider):
 
             item['gov_unit_name'] = gov_unit_name
             item['gov_unit_phone'] = gov_unit_phone
+
             # 再次发送请求获取数据
-            yield item
+            if self.check_data(item['gov_unit_name'][0]):
+                yield item
+
+
+    # 检测数据是否有用
+    def check_data(self,unit_name):
+        for index in range(len(self.exclude_words)):
+            if unit_name.find(self.exclude_words[index]) >= 0:
+                print("非法数据：" + unit_name)
+                return False
+            else:
+                print("合法数据：" + unit_name)
+                continue
+
+        return True
