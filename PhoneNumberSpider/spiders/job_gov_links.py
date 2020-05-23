@@ -176,7 +176,7 @@ class JobGovLinksSpider(scrapy.Spider):
         # "http://dianhua.mapbar.com/luohe",
         # "http://dianhua.mapbar.com/zhumadian",
         # "http://dianhua.mapbar.com/sanmenxia",
-        # "http://dianhua.mapbar.com/wuhan",
+        "http://dianhua.mapbar.com/wuhan",
         # "http://dianhua.mapbar.com/xiangyang",
         # "http://dianhua.mapbar.com/ezhou",
         # "http://dianhua.mapbar.com/xiaogan",
@@ -441,6 +441,7 @@ class JobGovLinksSpider(scrapy.Spider):
             for index in range(len(page_links)):
                 if now_page == page_links[index]:
                     if self.check_data(item['gov_unit_name'][0]):
+                        print("合法数据：" + item['gov_unit_name'][0])
                         yield item
                 else:
                     yield scrapy.Request(page_links[index],meta={'item': item},callback=self.parse_page)
@@ -461,6 +462,7 @@ class JobGovLinksSpider(scrapy.Spider):
 
             # 再次发送请求获取数据
             if self.check_data(item['gov_unit_name'][0]):
+                print("合法数据：" + item['gov_unit_name'][0])
                 yield item
 
 
@@ -471,7 +473,6 @@ class JobGovLinksSpider(scrapy.Spider):
                 print("非法数据：" + unit_name)
                 return False
             else:
-                print("合法数据：" + unit_name)
                 continue
 
         return True
