@@ -141,7 +141,7 @@ class JobGovLinksSpider(scrapy.Spider):
         # "http://dianhua.mapbar.com/jingdezhen",
         # "http://dianhua.mapbar.com/pingxiang",
         # "http://dianhua.mapbar.com/yingtan",
-        # "http://dianhua.mapbar.com/heze",
+        "http://dianhua.mapbar.com/heze",
         # "http://dianhua.mapbar.com/jinan",
         # "http://dianhua.mapbar.com/qingdao",
         # "http://dianhua.mapbar.com/zibo",
@@ -176,7 +176,7 @@ class JobGovLinksSpider(scrapy.Spider):
         # "http://dianhua.mapbar.com/luohe",
         # "http://dianhua.mapbar.com/zhumadian",
         # "http://dianhua.mapbar.com/sanmenxia",
-        "http://dianhua.mapbar.com/wuhan",
+        # "http://dianhua.mapbar.com/wuhan",
         # "http://dianhua.mapbar.com/xiangyang",
         # "http://dianhua.mapbar.com/ezhou",
         # "http://dianhua.mapbar.com/xiaogan",
@@ -401,7 +401,7 @@ class JobGovLinksSpider(scrapy.Spider):
                     # 筛选需要的链接
                     if names[index] in self.nameStrArr:
 
-                        item['province'] = '河南'
+                        item['province'] = '浙江'
                         item['city'] = city
                         item['gov_unit_type'] = names[index]
                         item['type_link'] = links[index]
