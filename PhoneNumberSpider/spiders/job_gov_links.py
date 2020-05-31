@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from PhoneNumberSpider.items import PhonenumberspiderItem
-
+import time;  # 引入time模块
+import random
 
 class JobGovLinksSpider(scrapy.Spider):
     name = 'job_gov_links'
@@ -22,17 +23,17 @@ class JobGovLinksSpider(scrapy.Spider):
         # "http://dianhua.mapbar.com/hengshui",
         # "http://dianhua.mapbar.com/xingtai",
         # "http://dianhua.mapbar.com/qinhuangdao",
-        # "http://dianhua.mapbar.com/shuozhou",
-        # "http://dianhua.mapbar.com/xinzhou",
-        # "http://dianhua.mapbar.com/taiyuan",
-        # "http://dianhua.mapbar.com/datong",
-        # "http://dianhua.mapbar.com/yangquan",
-        # "http://dianhua.mapbar.com/jinzhong",
-        # "http://dianhua.mapbar.com/changzhi",
-        # "http://dianhua.mapbar.com/jincheng",
-        # "http://dianhua.mapbar.com/linfen",
-        # "http://dianhua.mapbar.com/lvliang",
-        # "http://dianhua.mapbar.com/yuncheng",
+        "http://dianhua.mapbar.com/shuozhou",
+        "http://dianhua.mapbar.com/xinzhou",
+        "http://dianhua.mapbar.com/taiyuan",
+        "http://dianhua.mapbar.com/datong",
+        "http://dianhua.mapbar.com/yangquan",
+        "http://dianhua.mapbar.com/jinzhong",
+        "http://dianhua.mapbar.com/changzhi",
+        "http://dianhua.mapbar.com/jincheng",
+        "http://dianhua.mapbar.com/linfen",
+        "http://dianhua.mapbar.com/lvliang",
+        "http://dianhua.mapbar.com/yuncheng",
         # "http://dianhua.mapbar.com/hulunbeier",
         # "http://dianhua.mapbar.com/huhehaote",
         # "http://dianhua.mapbar.com/baotou",
@@ -141,7 +142,7 @@ class JobGovLinksSpider(scrapy.Spider):
         # "http://dianhua.mapbar.com/jingdezhen",
         # "http://dianhua.mapbar.com/pingxiang",
         # "http://dianhua.mapbar.com/yingtan",
-        "http://dianhua.mapbar.com/heze",
+        # "http://dianhua.mapbar.com/heze",
         # "http://dianhua.mapbar.com/jinan",
         # "http://dianhua.mapbar.com/qingdao",
         # "http://dianhua.mapbar.com/zibo",
@@ -401,11 +402,12 @@ class JobGovLinksSpider(scrapy.Spider):
                     # 筛选需要的链接
                     if names[index] in self.nameStrArr:
 
-                        item['province'] = '浙江'
+                        item['province'] = '山西'
                         item['city'] = city
                         item['gov_unit_type'] = names[index]
                         item['type_link'] = links[index]
 
+                        time.sleep(random.randint(0, 3))
                         yield scrapy.Request(links[index],
                                              meta={
                                                  'item': item,
@@ -444,6 +446,7 @@ class JobGovLinksSpider(scrapy.Spider):
                         print("合法数据：" + item['gov_unit_name'][0])
                         yield item
                 else:
+                    time.sleep(random.randint(0,3))
                     yield scrapy.Request(page_links[index],meta={'item': item},callback=self.parse_page)
 
 
